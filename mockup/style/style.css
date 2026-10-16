@@ -1,0 +1,287 @@
+/* --- Reset și Box-Sizing --- */
+* {
+  box-sizing: border-box;
+}
+
+/* --- Variabile de culori (Light Mode) --- */
+:root {
+  --bg-app: #0079bf; /* Albastrul clasic Trello */
+  --bg-board: #f4f5f7;
+  --bg-column: #ebecf0;
+  --card: #ffffff;
+  --text: #172b4d;
+  --muted: #5e6c84;
+  --border: #dfe1e6;
+  --accent: #0052cc;
+  --accent-hover: #0043a6;
+  
+  --badge-mica: #61bd4f;
+  --badge-medie: #f2d600;
+  --badge-mare: #eb5a46;
+}
+
+/* --- Tema Întunecată --- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-app: #14121d;
+    --bg-board: #14121d;
+    --bg-column: #1e1b2e;
+    --card: #2a263d;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --border: #352f4d;
+    --accent: #5b3fd9;
+    --accent-hover: #4338ca;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Antet (Header) --- */
+.app-header {
+  background-color: rgba(0, 0, 0, 0.15);
+  color: white;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(4px);
+}
+
+.header-content h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.header-content p {
+  margin: 4px 0 0 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.app-count {
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+/* --- Subsol (Footer) --- */
+.app-footer {
+  text-align: center;
+  padding: 16px;
+  color: white;
+  opacity: 0.7;
+  font-size: 0.85rem;
+  margin-top: auto;
+}
+
+/* --- Layout Principal --- */
+.container {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* --- Formular --- */
+.panel {
+  background-color: var(--bg-column);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.panel h2 {
+  margin: 0 0 16px 0;
+  font-size: 1.2rem;
+}
+
+.item-form {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.item-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.item-form input,
+.item-form select {
+  padding: 10px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  background-color: var(--card);
+  color: var(--text);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.item-form input:focus,
+.item-form select:focus {
+  border-color: var(--accent);
+}
+
+.item-form button {
+  padding: 12px 24px;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.item-form button:hover {
+  background-color: var(--accent-hover);
+}
+
+/* --- Kanban Board (CSS Grid) --- */
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+/* --- Coloane Kanban --- */
+.kanban-column {
+  background-color: var(--bg-column);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.column-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.task-counter {
+  background-color: var(--border);
+  color: var(--text);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* --- Lista și Cardurile --- */
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item-card {
+  background-color: var(--card);
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  border: 1px solid transparent;
+  cursor: grab;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-badges {
+  margin-bottom: 8px;
+}
+
+.item-card h3 {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.status {
+  font-size: 0.8rem;
+  color: var(--muted);
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* --- Element Finalizat --- */
+.item-card.done h3 {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+/* --- Etichete (Badges) --- */
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.badge-mica { background-color: var(--badge-mica); }
+.badge-medie { background-color: var(--badge-medie); color: #172b4d; }
+.badge-mare { background-color: var(--badge-mare); }
+
+/* --- Accesibilitate (Focus Vizibil) --- */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* --- Design Adaptiv (Ecrane Mobile) --- */
+@media (max-width: 700px) {
+  .app-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  
+  .item-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .kanban-board {
+    grid-template-columns: 1fr; /* Trece board-ul pe o singură coloană pe mobil */
+  }
+}
