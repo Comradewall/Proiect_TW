@@ -1,287 +1,322 @@
-/* --- Reset și Box-Sizing --- */
+/* --- Reset și setări generale --- */
 * {
   box-sizing: border-box;
 }
 
-/* --- Variabile de culori (Light Mode) --- */
 :root {
-  --bg-app: #0079bf; /* Albastrul clasic Trello */
-  --bg-board: #f4f5f7;
-  --bg-column: #ebecf0;
-  --card: #ffffff;
-  --text: #172b4d;
-  --muted: #5e6c84;
-  --border: #dfe1e6;
-  --accent: #0052cc;
-  --accent-hover: #0043a6;
+  --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --surface: rgba(255, 255, 255, 0.85);
+  --surface-card: #ffffff;
+  --text-main: #2d3748;
+  --text-muted: #718096;
+  --border-color: rgba(226, 232, 240, 0.8);
+  --primary: #5a67d8;
+  --primary-hover: #434190;
   
-  --badge-mica: #61bd4f;
-  --badge-medie: #f2d600;
-  --badge-mare: #eb5a46;
+  --badge-mica: #48bb78;
+  --badge-medie: #ecc94b;
+  --badge-mare: #f56565;
+  --danger-color: #e53e3e;
+  
+  --shadow-smooth: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
-/* --- Tema Întunecată --- */
+/* --- Tema întunecată (Dark Mode) --- */
+:root[data-theme="dark"],
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg-app: #14121d;
-    --bg-board: #14121d;
-    --bg-column: #1e1b2e;
-    --card: #2a263d;
-    --text: #e5e7eb;
-    --muted: #9ca3af;
-    --border: #352f4d;
-    --accent: #5b3fd9;
-    --accent-hover: #4338ca;
+  :root:not([data-theme="light"]) {
+    --bg-gradient: linear-gradient(135deg, #1a202c 0%, #0d1117 100%);
+    --surface: rgba(26, 32, 44, 0.85);
+    --surface-card: #2d3748;
+    --text-main: #f7fafc;
+    --text-muted: #a0aec0;
+    --border-color: rgba(45, 55, 72, 0.8);
+    --primary: #7f9cf5;
+    --primary-hover: #667eea;
+    --shadow-smooth: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
   }
+}
+
+:root[data-theme="dark"] {
+  --bg-gradient: linear-gradient(135deg, #1a202c 0%, #0d1117 100%);
+  --surface: rgba(26, 32, 44, 0.85);
+  --surface-card: #2d3748;
+  --text-main: #f7fafc;
+  --text-muted: #a0aec0;
+  --border-color: rgba(45, 55, 72, 0.8);
+  --primary: #7f9cf5;
+  --primary-hover: #667eea;
+  --shadow-smooth: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background-color: var(--bg-app);
-  color: var(--text);
-  line-height: 1.5;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-main);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-attachment: fixed;
 }
 
-/* --- Antet (Header) --- */
+/* --- Antet modern (Glassmorphism Header) --- */
 .app-header {
-  background-color: rgba(0, 0, 0, 0.15);
-  color: white;
-  padding: 16px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  backdrop-filter: blur(4px);
+  position: relative;
+  max-width: 900px;
+  width: calc(100% - 32px);
+  margin: 30px auto 20px auto;
+  padding: 30px;
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: var(--shadow-smooth);
+  text-align: center;
 }
 
-.header-content h1 {
-  margin: 0;
-  font-size: 1.5rem;
+.app-header h1 {
+  margin: 0 0 8px 0;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--primary), #ed64a6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.header-content p {
-  margin: 4px 0 0 0;
-  font-size: 0.9rem;
-  opacity: 0.8;
+.app-header p {
+  margin: 0 0 16px 0;
+  color: var(--text-muted);
+  font-size: 1rem;
 }
 
 .app-count {
-  font-weight: bold;
-  background-color: rgba(255, 255, 255, 0.2);
-  padding: 6px 12px;
-  border-radius: 20px;
-}
-
-/* --- Subsol (Footer) --- */
-.app-footer {
-  text-align: center;
-  padding: 16px;
+  display: inline-block;
+  padding: 6px 16px;
+  background: var(--primary);
   color: white;
-  opacity: 0.7;
+  border-radius: 50px;
+  font-weight: 600;
   font-size: 0.85rem;
-  margin-top: auto;
+  box-shadow: 0 4px 12px rgba(90, 103, 216, 0.3);
 }
 
-/* --- Layout Principal --- */
+/* --- Butonul de schimbare a temei --- */
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 2px solid var(--border-color);
+  color: var(--text-main);
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+/* --- Containerul principal --- */
 .container {
-  max-width: 1200px;
-  margin: 24px auto;
+  max-width: 900px;
+  margin: 0 auto 50px auto;
   padding: 0 16px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
 }
 
-/* --- Formular --- */
 .panel {
-  background-color: var(--bg-column);
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: var(--shadow-smooth);
 }
 
 .panel h2 {
-  margin: 0 0 16px 0;
-  font-size: 1.2rem;
+  margin: 0 0 24px 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 12px;
 }
 
-.item-form {
-  display: flex;
-  gap: 16px;
-  align-items: flex-end;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.item-form label {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.item-form input,
-.item-form select {
-  padding: 10px;
-  border: 2px solid var(--border);
-  border-radius: 6px;
-  background-color: var(--card);
-  color: var(--text);
-  font-family: inherit;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.item-form input:focus,
-.item-form select:focus {
-  border-color: var(--accent);
-}
-
-.item-form button {
-  padding: 12px 24px;
-  background-color: var(--accent);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.2s;
-}
-
-.item-form button:hover {
-  background-color: var(--accent-hover);
-}
-
-/* --- Kanban Board (CSS Grid) --- */
-.kanban-board {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  align-items: start;
-}
-
-/* --- Coloane Kanban --- */
-.kanban-column {
-  background-color: var(--bg-column);
-  border-radius: 10px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.column-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.column-header h2 {
-  margin: 0;
-  font-size: 1.1rem;
-  color: var(--text);
-}
-
-.task-counter {
-  background-color: var(--border);
-  color: var(--text);
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  font-weight: bold;
-}
-
-/* --- Lista și Cardurile --- */
-.item-list {
+/* --- Grid de carduri modern (Bento Grid) --- */
+.task-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* --- Un singur Card --- */
+.task-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 16px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.item-card {
-  background-color: var(--card);
-  border-radius: 8px;
-  padding: 12px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  border: 1px solid transparent;
-  cursor: grab;
-  transition: transform 0.1s, box-shadow 0.1s;
+.task-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: var(--primary);
 }
 
-.item-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.1);
 }
 
-.card-badges {
-  margin-bottom: 8px;
-}
-
-.item-card h3 {
-  margin: 0 0 12px 0;
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-.status {
-  font-size: 0.8rem;
-  color: var(--muted);
+/* --- Zona principală din card (Checkbox + Titlu + Badge) --- */
+.task-main {
   display: flex;
-  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
 }
 
-/* --- Element Finalizat --- */
-.item-card.done h3 {
+.task-main input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--text-muted);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.task-main input[type="checkbox"]::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em white;
+  transform-origin: center;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.task-main input[type="checkbox"]:checked {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.task-main input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+.task-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.1rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+/* --- Starea de Finalizat (Done) --- */
+.task-card.done {
+  opacity: 0.65;
+  background: color-mix(in srgb, var(--surface-card) 90%, var(--text-muted));
+}
+
+.task-card.done h3 {
   text-decoration: line-through;
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
-/* --- Etichete (Badges) --- */
+/* --- Badge-uri colorate pentru Prioritate --- */
 .badge {
   display: inline-block;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 4px 10px;
+  border-radius: 6px;
   color: white;
-  font-size: 0.75rem;
-  font-weight: bold;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .badge-mica { background-color: var(--badge-mica); }
-.badge-medie { background-color: var(--badge-medie); color: #172b4d; }
+.badge-medie { background-color: var(--badge-medie); color: #744210; }
 .badge-mare { background-color: var(--badge-mare); }
 
-/* --- Accesibilitate (Focus Vizibil) --- */
+/* --- Butonul de ștergere stilizat --- */
+.btn-danger {
+  align-self: flex-end;
+  background: transparent;
+  border: 1px solid var(--danger-color);
+  color: var(--danger-color);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+  background: var(--danger-color);
+  color: white;
+  box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
+}
+
+/* --- Mesajul pentru lista goală --- */
+.empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 40px 0;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* --- Accesibilitate --- */
 :focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--primary);
   outline-offset: 2px;
 }
 
-/* --- Design Adaptiv (Ecrane Mobile) --- */
-@media (max-width: 700px) {
+/* --- Responsive design pe mobil --- */
+@media (max-width: 600px) {
   .app-header {
-    flex-direction: column;
-    text-align: center;
-    gap: 12px;
+    padding: 24px 16px;
   }
-  
-  .item-form {
-    flex-direction: column;
-    align-items: stretch;
+  .theme-toggle {
+    position: static;
+    margin-bottom: 15px;
   }
-  
-  .kanban-board {
-    grid-template-columns: 1fr; /* Trece board-ul pe o singură coloană pe mobil */
+  .task-list {
+    grid-template-columns: 1fr;
   }
 }

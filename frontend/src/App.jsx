@@ -1,95 +1,88 @@
-const taskuri = [
- { id: 1, titlu: "Tema la Baze de date", gata: false, prioritate: "mare" },
- { id: 2, titlu: "Citit capitolul 3", gata: true, prioritate: "medie" },
- { id: 3, titlu: "Cumpărat cafea", gata: false, prioritate: "mica" },
+import { useState } from "react";
+import TaskList from "./components/TaskList.jsx";
+import "./App.css";
+
+// Listă extinsă de taskuri pentru a da un aspect realist de aplicație de productivitate
+const TASKURI_INITIALE = [
+  { id: 1, titlu: "Finalizare proiect Tehnologii Web (Etapa 5)", gata: false, prioritate: "mare" },
+  { id: 2, titlu: "Citit capitolul 3 din documentația React", gata: true, prioritate: "medie" },
+  { id: 3, titlu: "Cumpărat cafea și snacks-uri pentru sesiune", gata: false, prioritate: "mica" },
+  { id: 4, titlu: "Implementare rutare dinamică și API fetch", gata: false, prioritate: "mare" },
+  { id: 5, titlu: "Revizuire cod CSS pentru Dark Mode", gata: true, prioritate: "medie" },
+  { id: 6, titlu: "Pregătire prezentare PowerPoint pentru seminar", gata: false, prioritate: "mare" },
+  { id: 7, titlu: "Commit și push pe GitHub pentru repository", gata: false, prioritate: "mica" },
 ];
 
+// Tema de pornire: cea a sistemului de operare
+function temaInitiala() {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
 export default function App() {
+  const [taskuri, setTaskuri] = useState(TASKURI_INITIALE);
+  const [tema, setTema] = useState(temaInitiala);
+
+  // Actualizare imutabilă: listă nouă, obiect nou pentru elementul schimbat
+  function handleToggle(id) {
+    setTaskuri((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, gata: !t.gata } : t))
+    );
+  }
+
+  function handleDelete(id) {
+    setTaskuri((prev) => prev.filter((t) => t.id !== id));
+  }
+
+  // Comutarea temei: state-ul pentru buton, atributul data-theme pentru CSS
+  function handleTema() {
+    const noua = tema === "dark" ? "light" : "dark";
+    setTema(noua);
+    document.documentElement.dataset.theme = noua;
+  }
+
+  // Valori derivate pentru statistici avansate în antet
+  const total = taskuri.length;
   const active = taskuri.filter((t) => !t.gata).length;
- return (
- <>
-     <header class="app-header">
-    <div class="header-content">
-      <h1>KanbanBoard</h1>
-      <p>Management vizual al proiectelor și sarcinilor.</p>
-    </div>
-    <p class="app-count">3 sarcini, dintre care 2 active</p>
-  </header>
+  const gata = total - active;
+  const procentaj = total > 0 ? Math.round((gata / total) * 100) : 0;
 
-  <main class="container">
-    <section class="panel form-panel">
-      <h2>Adaugă un task nou</h2>
-      <form class="item-form">
-        <div class="form-group">
-          <label>Titlu task
-            <input type="text" name="titlu" placeholder="Ex: Integrare API..." />
-          </label>
+  return (
+    <>
+      <header className="app-header">
+        <button
+          className="theme-toggle"
+          onClick={handleTema}
+          aria-pressed={tema === "dark"}
+        >
+          {tema === "dark" ? "☀️ Mod luminos" : "🌙 Mod întunecat"}
+        </button>
+        <h1>FlowLess Workspace</h1>
+        <p>Platformă modernă pentru gestionarea și organizarea sarcinilor zilnice.</p>
+        
+        {/* Bară de progres și statistici pentru un aspect de aplicație reală */}
+        <div style={{ marginTop: "16px", display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+          <span className="app-count">Total: {total}</span>
+          <span className="app-count">Active: {active}</span>
+          <span className="app-count">Finalizate: {gata} ({procentaj}%)</span>
         </div>
-        <div class="form-group">
-          <label>Prioritate
-            <select name="eticheta">
-              <option value="mica">Mică</option>
-              <option value="medie">Medie</option>
-              <option value="mare">Mare</option>
-            </select>
-          </label>
-        </div>
-        <button type="submit">Adaugă pe Board</button>
-      </form>
-    </section>
-    <section class="kanban-board">
-      <div class="kanban-column">
-        <div class="column-header">
-          <h2>De făcut</h2>
-          <span class="task-counter">1</span>
-        </div>
-        <ul class="item-list">
-          <li class="item-card">
-            <div class="card-badges">
-              <span class="badge badge-mare">Prioritate Mare</span>
-            </div>
-            <h3>Creare mockup interfață HTML/CSS</h3>
-            <span class="status">Activ</span>
-          </li>
-        </ul>
-      </div>
-      <div class="kanban-column">
-        <div class="column-header">
-          <h2>În lucru</h2>
-          <span class="task-counter">1</span>
-        </div>
-        <ul class="item-list">
-          <li class="item-card">
-            <div class="card-badges">
-              <span class="badge badge-mica">Prioritate Mică</span>
-            </div>
-            <h3>Documentare componente React</h3>
-            <span class="status">Activ</span>
-          </li>
-        </ul>
-      </div>
-      <div class="kanban-column">
-        <div class="column-header">
-          <h2>Finalizate</h2>
-          <span class="task-counter">1</span>
-        </div>
-        <ul class="item-list">
-          <li class="item-card done">
-            <div class="card-badges">
-              <span class="badge badge-medie">Prioritate Medie</span>
-            </div>
-            <h3>Configurare mediu GitHub și Git</h3>
-            <span class="status">Finalizat</span>
-          </li>
-        </ul>
-      </div>
+      </header>
 
-    </section>
-  </main>
+      <main className="container">
+        <section className="panel">
+          <h2>Task-urile mele active</h2>
+          <TaskList
+            taskuri={taskuri}
+            onToggle={handleToggle}
+            onDelete={handleDelete}
+          />
+        </section>
+      </main>
 
-  <footer class="app-footer">
-    Proiect Tehnologii Web - Etapa 1
-  </footer>
- </>
- );
+      <footer className="app-footer">
+        <p></p>
+      </footer>
+    </>
+  );
 }
