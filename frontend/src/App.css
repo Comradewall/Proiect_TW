@@ -1,322 +1,722 @@
-/* --- Reset și setări generale --- */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+
+/* ---------- Tokeni ---------- */
 * {
   box-sizing: border-box;
 }
 
 :root {
-  --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --surface: rgba(255, 255, 255, 0.85);
-  --surface-card: #ffffff;
-  --text-main: #2d3748;
-  --text-muted: #718096;
-  --border-color: rgba(226, 232, 240, 0.8);
-  --primary: #5a67d8;
-  --primary-hover: #434190;
-  
-  --badge-mica: #48bb78;
-  --badge-medie: #ecc94b;
-  --badge-mare: #f56565;
-  --danger-color: #e53e3e;
-  
-  --shadow-smooth: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-}
+  --card-w: 288px;
 
-/* --- Tema întunecată (Dark Mode) --- */
-:root[data-theme="dark"],
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg-gradient: linear-gradient(135deg, #1a202c 0%, #0d1117 100%);
-    --surface: rgba(26, 32, 44, 0.85);
-    --surface-card: #2d3748;
-    --text-main: #f7fafc;
-    --text-muted: #a0aec0;
-    --border-color: rgba(45, 55, 72, 0.8);
-    --primary: #7f9cf5;
-    --primary-hover: #667eea;
-    --shadow-smooth: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
-  }
+  --bg: #eef1f6;
+  --panel: #ffffff;
+  --card: #ffffff;
+  --handle-bg: #f4f6fa;
+  --ink: #0f1b2d;
+  --ink-2: #4a5a70;
+  --line: #d9e0ea;
+  --accent: #1f4fd8;
+  --accent-ink: #ffffff;
+  --accent-soft: #e6edff;
+  --board-dot: #c7d0df;
+  --sh: 16 24 40; /* culoarea umbrei (RGB) */
+
+  --mare: #b42318;
+  --mare-bg: #fee4e2;
+  --medie: #93370d;
+  --medie-bg: #fef0c7;
+  --mica: #067647;
+  --mica-bg: #d1fadf;
+  --danger: #b42318;
+
+  --side-bg: #0f1b2d;
+  --side-ink: #c9d3e3;
+  --side-active: #1b2c47;
 }
 
 :root[data-theme="dark"] {
-  --bg-gradient: linear-gradient(135deg, #1a202c 0%, #0d1117 100%);
-  --surface: rgba(26, 32, 44, 0.85);
-  --surface-card: #2d3748;
-  --text-main: #f7fafc;
-  --text-muted: #a0aec0;
-  --border-color: rgba(45, 55, 72, 0.8);
-  --primary: #7f9cf5;
-  --primary-hover: #667eea;
-  --shadow-smooth: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  --bg: #0b1220;
+  --panel: #131c2e;
+  --card: #1a2438;
+  --handle-bg: #213049;
+  --ink: #e8edf5;
+  --ink-2: #9aa8bd;
+  --line: #26334a;
+  --accent: #6c93ff;
+  --accent-ink: #0b1220;
+  --accent-soft: #1c2a4d;
+  --board-dot: #26334a;
+  --sh: 0 0 0;
+
+  --mare: #fda29b;
+  --mare-bg: #3b1a18;
+  --medie: #fec84b;
+  --medie-bg: #3a2a0c;
+  --mica: #75e0a7;
+  --mica-bg: #0f2e21;
+  --danger: #fda29b;
+
+  --side-bg: #070d19;
+  --side-active: #131c2e;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: var(--bg-gradient);
-  color: var(--text-main);
+  font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Structura paginii ---------- */
+.shell {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
   min-height: 100vh;
+}
+
+.content {
+  padding: 28px 32px 56px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  background-attachment: fixed;
+  gap: 16px;
 }
 
-/* --- Antet modern (Glassmorphism Header) --- */
-.app-header {
-  position: relative;
-  max-width: 900px;
-  width: calc(100% - 32px);
-  margin: 30px auto 20px auto;
-  padding: 30px;
-  background: var(--surface);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  box-shadow: var(--shadow-smooth);
-  text-align: center;
-}
-
-.app-header h1 {
-  margin: 0 0 8px 0;
-  font-size: 2.2rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  background: linear-gradient(135deg, var(--primary), #ed64a6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.app-header p {
-  margin: 0 0 16px 0;
-  color: var(--text-muted);
-  font-size: 1rem;
-}
-
-.app-count {
-  display: inline-block;
-  padding: 6px 16px;
-  background: var(--primary);
-  color: white;
-  border-radius: 50px;
+.topbar h1 {
+  margin: 0;
+  font-size: 1.5rem;
   font-weight: 600;
-  font-size: 0.85rem;
-  box-shadow: 0 4px 12px rgba(90, 103, 216, 0.3);
+  letter-spacing: -0.01em;
 }
 
-/* --- Butonul de schimbare a temei --- */
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 8px 14px;
-  background: transparent;
-  border: 2px solid var(--border-color);
-  color: var(--text-main);
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.theme-toggle:hover {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
-  transform: translateY(-2px);
-}
-
-/* --- Containerul principal --- */
-.container {
-  max-width: 900px;
-  margin: 0 auto 50px auto;
-  padding: 0 16px;
-  width: 100%;
+.topbar p {
+  margin: 2px 0 0;
+  color: var(--ink-2);
+  max-width: 62ch;
 }
 
 .panel {
-  background: var(--surface);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: var(--shadow-smooth);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
 }
 
-.panel h2 {
-  margin: 0 0 24px 0;
-  font-size: 1.4rem;
-  font-weight: 700;
-  border-bottom: 2px solid var(--border-color);
-  padding-bottom: 12px;
-}
-
-/* --- Grid de carduri modern (Bento Grid) --- */
-.task-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
-}
-
-/* --- Un singur Card --- */
-.task-card {
-  background: var(--surface-card);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+/* ---------- Bara laterală ---------- */
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  gap: 24px;
+  padding: 20px 12px;
+  background: var(--side-bg);
+  color: var(--side-ink);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px;
+  color: #fff;
+}
+
+.brand-mark {
+  display: grid;
+  place-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #3b6bff;
+  font-weight: 600;
+}
+
+.brand-name {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background: var(--side-active);
+  color: #fff;
+}
+
+.nav-item[aria-current="page"] {
+  background: var(--side-active);
+  color: #fff;
+  box-shadow: inset 3px 0 0 #3b6bff;
+}
+
+.nav-count {
+  margin-left: auto;
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background: #3b6bff;
+  color: #fff;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+/* ---------- Statistici ---------- */
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 16px 20px;
+}
+
+.stats-values {
+  display: flex;
+  gap: 28px;
+  margin: 0;
+}
+
+.stats-values dt {
+  font-size: 0.8rem;
+  color: var(--ink-2);
+}
+
+.stats-values dd {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.progress-wrap {
+  flex: 1;
+  min-width: 180px;
+}
+
+.progress-label {
+  display: flex;
   justify-content: space-between;
-  gap: 16px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  position: relative;
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  margin-bottom: 6px;
+}
+
+.progress-label strong {
+  color: var(--ink);
+}
+
+.progress {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--line);
   overflow: hidden;
 }
 
-.task-card::before {
-  content: "";
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+/* ---------- Bara de instrumente ---------- */
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-form,
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.input {
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+}
+
+.input:focus-visible {
+  outline-offset: 0;
+  border-color: var(--accent);
+}
+
+.input.grow {
+  flex: 1;
+  min-width: 220px;
+}
+
+.input.search {
+  width: 220px;
+}
+
+.btn {
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--ink-2);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+  border-color: var(--accent);
+}
+
+.btn-sm {
+  height: 30px;
+  padding: 0 10px;
+  font-size: 0.85rem;
+}
+
+.btn-danger {
+  color: var(--danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  border-color: var(--danger);
+  background: var(--mare-bg);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+}
+
+.chip {
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: transparent;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ---------- Suprafața de lucru ---------- */
+.board {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background-color: var(--panel);
+  background-image: radial-gradient(var(--board-dot) 1px, transparent 1px);
+  background-size: 20px 20px;
+  overflow-x: auto;
+}
+
+.board-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.task-slot {
   position: absolute;
   top: 0;
   left: 0;
-  width: 5px;
-  height: 100%;
-  background: var(--primary);
+  width: var(--card-w);
 }
 
-.task-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.1);
+.task-slot.dimmed {
+  opacity: 0.25;
+  filter: grayscale(1);
+  pointer-events: none;
 }
 
-/* --- Zona principală din card (Checkbox + Titlu + Badge) --- */
+/* ---------- Cardul plutitor ---------- */
+/* Lumina vine din stânga-sus: umbra cade spre dreapta-jos.
+   Straturile: contact (strânsă), ambientală (largă) și direcțională (decalată). */
+.task-card {
+  --lift-y: 0px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 2px rgb(var(--sh) / 0.12),
+    0 6px 14px -4px rgb(var(--sh) / 0.14),
+    10px 16px 26px -10px rgb(var(--sh) / 0.2);
+  transform: translateY(var(--lift-y));
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.task-slot:hover .task-card {
+  --lift-y: -2px;
+  box-shadow:
+    0 1px 2px rgb(var(--sh) / 0.12),
+    0 10px 20px -4px rgb(var(--sh) / 0.18),
+    14px 22px 32px -10px rgb(var(--sh) / 0.24);
+}
+
+/* Cardul „ridicat” în timpul tragerii: umbra se mărește și se îndepărtează */
+.task-slot .task-card.dragging {
+  transform: translateY(-6px) scale(1.025) rotate(-0.8deg);
+  box-shadow:
+    0 2px 4px rgb(var(--sh) / 0.14),
+    0 22px 38px -8px rgb(var(--sh) / 0.28),
+    28px 40px 52px -14px rgb(var(--sh) / 0.34);
+  transition: box-shadow 0.12s ease, transform 0.12s ease;
+}
+
+.card-handle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--handle-bg);
+  color: var(--ink-2);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.task-card.dragging .card-handle {
+  cursor: grabbing;
+}
+
+.tag {
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.tag-mare { background: var(--mare-bg); color: var(--mare); }
+.tag-medie { background: var(--medie-bg); color: var(--medie); }
+.tag-mica { background: var(--mica-bg); color: var(--mica); }
+
 .task-main {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 10px;
+  padding: 14px 14px 10px;
   cursor: pointer;
 }
 
 .task-main input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 22px;
-  height: 22px;
-  border: 2px solid var(--text-muted);
-  border-radius: 6px;
-  background: transparent;
-  cursor: pointer;
-  display: grid;
-  place-content: center;
-  transition: all 0.2s ease;
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
   flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.task-main input[type="checkbox"]::before {
-  content: "";
-  width: 12px;
-  height: 12px;
-  transform: scale(0);
-  transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em white;
-  transform-origin: center;
-  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-}
-
-.task-main input[type="checkbox"]:checked {
-  background: var(--primary);
-  border-color: var(--primary);
-}
-
-.task-main input[type="checkbox"]:checked::before {
-  transform: scale(1);
+  accent-color: var(--accent);
+  cursor: pointer;
 }
 
 .task-card h3 {
-  margin: 0 0 10px 0;
-  font-size: 1.1rem;
-  font-weight: 650;
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 500;
   line-height: 1.4;
-}
-
-/* --- Starea de Finalizat (Done) --- */
-.task-card.done {
-  opacity: 0.65;
-  background: color-mix(in srgb, var(--surface-card) 90%, var(--text-muted));
 }
 
 .task-card.done h3 {
   text-decoration: line-through;
-  color: var(--text-muted);
+  color: var(--ink-2);
 }
 
-/* --- Badge-uri colorate pentru Prioritate --- */
-.badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 6px;
-  color: white;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.task-card.done {
+  background: color-mix(in srgb, var(--card) 92%, var(--ink-2));
 }
 
-.badge-mica { background-color: var(--badge-mica); }
-.badge-medie { background-color: var(--badge-medie); color: #744210; }
-.badge-mare { background-color: var(--badge-mare); }
-
-/* --- Butonul de ștergere stilizat --- */
-.btn-danger {
-  align-self: flex-end;
-  background: transparent;
-  border: 1px solid var(--danger-color);
-  color: var(--danger-color);
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 14px 14px;
 }
 
-.btn-danger:hover {
-  background: var(--danger-color);
-  color: white;
-  box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
 }
 
-/* --- Mesajul pentru lista goală --- */
-.empty {
-  text-align: center;
-  color: var(--text-muted);
-  font-style: italic;
-  padding: 40px 0;
-  font-size: 1.1rem;
+/* ---------- Pagina de notițe ---------- */
+.notes {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.notes-list {
+  padding: 8px;
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+}
+
+.notes-list ul {
+  list-style: none;
   margin: 0;
+  padding: 0;
 }
 
-/* --- Accesibilitate --- */
-:focus-visible {
-  outline: 3px solid var(--primary);
-  outline-offset: 2px;
+.notes-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
 }
 
-/* --- Responsive design pe mobil --- */
-@media (max-width: 600px) {
-  .app-header {
-    padding: 24px 16px;
-  }
-  .theme-toggle {
-    position: static;
-    margin-bottom: 15px;
-  }
-  .task-list {
+.notes-item:hover {
+  background: var(--handle-bg);
+}
+
+.notes-item[aria-current="true"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.notes-item-title {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--ink-2);
+  flex-shrink: 0;
+}
+
+.status-dot.ok {
+  background: var(--mica);
+  border-color: var(--mica);
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 12px;
+  min-height: 480px;
+}
+
+.editor-head h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.editor-head p {
+  margin: 2px 0 0;
+  color: var(--ink-2);
+  font-size: 0.9rem;
+}
+
+.editor-tools {
+  display: flex;
+  gap: 8px;
+}
+
+.editor-area {
+  flex: 1;
+  min-height: 300px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.editor-area:focus-visible {
+  outline-offset: 0;
+  border-color: var(--accent);
+}
+
+.editor-foot {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-2);
+  font-size: 0.8rem;
+}
+
+/* ---------- Diverse ---------- */
+.empty {
+  margin: 0;
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--ink-2);
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #0f1b2d;
+  color: #fff;
+  box-shadow: 0 12px 28px rgb(0 0 0 / 0.3);
+  font-size: 0.9rem;
+  max-width: calc(100vw - 32px);
+}
+
+.toast button {
+  border: 0;
+  background: transparent;
+  color: #9db6ff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .shell {
     grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+  }
+
+  .nav {
+    flex-direction: row;
+    gap: 4px;
+  }
+
+  .nav-item {
+    width: auto;
+  }
+
+  .nav-item[aria-current="page"] {
+    box-shadow: inset 0 -3px 0 #3b6bff;
+  }
+
+  .theme-btn span {
+    display: none;
+  }
+
+  .content {
+    padding: 16px;
+  }
+
+  .stats {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .notes {
+    grid-template-columns: 1fr;
+  }
+
+  .notes-list {
+    position: static;
+    max-height: 220px;
+  }
+
+  .input.search {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .task-card,
+  .task-card.dragging,
+  .progress-fill {
+    transition: none;
   }
 }
