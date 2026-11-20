@@ -1,0 +1,11 @@
+{
+  "tasks": [
+    { "id": 1, "titlu": "Finalizare proiect Tehnologii Web (Etapa 8)", "gata": false, "prioritate": "mare" },
+    { "id": 2, "titlu": "Citit capitolul 3 din documentația React", "gata": true, "prioritate": "medie" },
+    { "id": 3, "titlu": "Cumpărat cafea și snacks-uri pentru sesiune", "gata": false, "prioritate": "mica" },
+    { "id": 4, "titlu": "Implementare rutare dinamică și API fetch", "gata": false, "prioritate": "mare" },
+    { "id": 5, "titlu": "Revizuire cod CSS pentru Dark Mode", "gata": true, "prioritate": "medie" },
+    { "id": 6, "titlu": "Pregătire prezentare PowerPoint pentru seminar", "gata": false, "prioritate": "mare" },
+    { "id": 7, "titlu": "Commit și push pe GitHub pentru repository", "gata": false, "prioritate": "mica" }
+  ]
+}

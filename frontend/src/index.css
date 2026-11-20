@@ -1,0 +1,215 @@
+/* Stiluri globale: variabile, elemente de bază, clase comune.
+   Stilurile de componentă stau în fișiere *.module.css */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #eef1f6;
+  --panel: #ffffff;
+  --card: #ffffff;
+  --handle-bg: #f4f6fa;
+  --ink: #0f1b2d;
+  --ink-2: #4a5a70;
+  --line: #d9e0ea;
+  --accent: #1f4fd8;
+  --accent-ink: #ffffff;
+  --accent-soft: #e6edff;
+  --board-dot: #c7d0df;
+  --sh: 16 24 40; /* culoarea umbrei (RGB) */
+
+  --mare: #b42318;
+  --mare-bg: #fee4e2;
+  --medie: #93370d;
+  --medie-bg: #fef0c7;
+  --mica: #067647;
+  --mica-bg: #d1fadf;
+
+  --side-bg: #0f1b2d;
+  --side-ink: #c9d3e3;
+  --side-active: #1b2c47;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b1220;
+  --panel: #131c2e;
+  --card: #1a2438;
+  --handle-bg: #213049;
+  --ink: #e8edf5;
+  --ink-2: #9aa8bd;
+  --line: #26334a;
+  --accent: #6c93ff;
+  --accent-ink: #0b1220;
+  --accent-soft: #1c2a4d;
+  --board-dot: #26334a;
+  --sh: 0 0 0;
+
+  --mare: #fda29b;
+  --mare-bg: #3b1a18;
+  --medie: #fec84b;
+  --medie-bg: #3a2a0c;
+  --mica: #75e0a7;
+  --mica-bg: #0f2e21;
+
+  --side-bg: #070d19;
+  --side-active: #131c2e;
+}
+
+body {
+  margin: 0;
+  font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+a {
+  color: var(--accent);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* --- Clase comune --- */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.panel h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.info {
+  color: var(--ink-2);
+}
+
+.empty {
+  margin: 0;
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--ink-2);
+}
+
+.error {
+  margin: 0;
+  color: var(--mare);
+  background: var(--mare-bg);
+  border: 1px solid color-mix(in srgb, var(--mare) 35%, transparent);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.input {
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+}
+
+.input:focus-visible {
+  outline-offset: 0;
+  border-color: var(--accent);
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--mare);
+}
+
+.btn {
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--ink-2);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+  border-color: var(--accent);
+}
+
+.btn-sm {
+  height: 30px;
+  padding: 0 10px;
+  font-size: 0.85rem;
+}
+
+.btn-danger {
+  color: var(--mare);
+}
+
+.btn-danger:hover:not(:disabled) {
+  border-color: var(--mare);
+  background: var(--mare-bg);
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badge-mica { background: var(--mica-bg); color: var(--mica); }
+.badge-medie { background: var(--medie-bg); color: var(--medie); }
+.badge-mare { background: var(--mare-bg); color: var(--mare); }
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}

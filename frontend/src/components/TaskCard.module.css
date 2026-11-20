@@ -1,0 +1,125 @@
+.slot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 288px; /* = CARD_WIDTH din constants.js */
+}
+
+.dimmed {
+  opacity: 0.25;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
+/* Lumina vine din stânga-sus: umbra cade spre dreapta-jos.
+   Straturile: contact (strânsă), ambientală (largă) și direcțională (decalată). */
+.card {
+  --lift-y: 0px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 2px rgb(var(--sh) / 0.12),
+    0 6px 14px -4px rgb(var(--sh) / 0.14),
+    10px 16px 26px -10px rgb(var(--sh) / 0.2);
+  transform: translateY(var(--lift-y));
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.slot:hover .card {
+  --lift-y: -2px;
+  box-shadow:
+    0 1px 2px rgb(var(--sh) / 0.12),
+    0 10px 20px -4px rgb(var(--sh) / 0.18),
+    14px 22px 32px -10px rgb(var(--sh) / 0.24);
+}
+
+/* Cardul „ridicat” în timpul tragerii: umbra se mărește și se îndepărtează */
+.slot .card.dragging {
+  transform: translateY(-6px) scale(1.025) rotate(-0.8deg);
+  box-shadow:
+    0 2px 4px rgb(var(--sh) / 0.14),
+    0 22px 38px -8px rgb(var(--sh) / 0.28),
+    28px 40px 52px -14px rgb(var(--sh) / 0.34);
+  transition: box-shadow 0.12s ease, transform 0.12s ease;
+}
+
+.done {
+  background: color-mix(in srgb, var(--card) 92%, var(--ink-2));
+}
+
+.handle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--handle-bg);
+  color: var(--ink-2);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.dragging .handle {
+  cursor: grabbing;
+}
+
+.prio {
+  margin-left: auto;
+}
+
+.main {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 14px 10px;
+}
+
+.main input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.main h3 {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.title {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.title:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.done .title {
+  text-decoration: line-through;
+  color: var(--ink-2);
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 14px 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .slot .card.dragging {
+    transition: none;
+  }
+}

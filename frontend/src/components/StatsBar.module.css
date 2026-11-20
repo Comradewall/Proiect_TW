@@ -1,0 +1,67 @@
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.values {
+  display: flex;
+  gap: 28px;
+  margin: 0;
+}
+
+.values dt {
+  font-size: 0.8rem;
+  color: var(--ink-2);
+}
+
+.values dd {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.progressWrap {
+  flex: 1;
+  min-width: 180px;
+}
+
+.progressLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  margin-bottom: 6px;
+}
+
+.progressLabel strong {
+  color: var(--ink);
+}
+
+.progress {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+@media (max-width: 860px) {
+  .stats {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    transition: none;
+  }
+}
